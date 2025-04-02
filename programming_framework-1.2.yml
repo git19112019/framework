@@ -1,0 +1,306 @@
+programming_framework:
+  title: "Interactive Programming Learning Framework with Layered Visualization"
+  version: "1.2" # Version updated
+  author: "You"
+  description: >
+    A YAML-based specification for a system designed to teach programming with interactive layers.
+    It combines flowcharts, pseudocode, and programming code in a sequential and linkable format.
+    This approach allows learners to visualize, understand, implement, and receive feedback on programming concepts.
+  
+  # --- NEW: Technical Environment Specification ---
+  technical_environment:
+    description: >
+      Defines the expected technical capabilities and configurations for the system implementing this framework.
+    yaml_processor_version: ">=1.0" # Specifies minimum processor version needed
+    supported_flowchart_renderers: 
+      - name: "mermaid"
+        version: ">=9.0"
+    supported_pseudocode_formats:
+      - "markdown_list" # Indicates the format used in examples
+      - "structured_text" # Could support other formats
+    supported_languages: # Define languages the framework aims to support
+      - name: "python"
+        default_version: "3.9"
+        execution_environment: "sandboxed_python_interpreter" # Specifies how code should be run
+        linter: "pylint" # Optional: Linter for feedback
+        formatter: "black" # Optional: Formatter for style feedback
+      - name: "javascript"
+        default_version: "ES6"
+        execution_environment: "browser_sandbox or nodejs_sandbox"
+        linter: "eslint"
+    default_language: "python" # Sets the default if not specified in task
+
+  visualization_layers:
+    description: >
+      An interactive system where programming concepts are layered step-by-step:
+      flowchart first, pseudocode second, and programming code third. Layers should be visually linkable.
+    layers:
+      - flowchart:
+          description: >
+            Provides a visual representation of the logical flow using specified renderers. Nodes should support unique IDs for mapping.
+          example: | # Added IDs to nodes
+            graph TD
+              A[Start]:::start --> B(Show Menu):::show_menu;
+              B --> C{Choose Option}:::choose_option;
+              C -- 1 --> D[Add Task]:::add_task_node;
+              D --> E[(Append to List)]:::append_list;
+              C -- 2 --> F[View Tasks]:::view_tasks_node;
+              F --> G[(Loop and Display)]:::loop_display;
+              C -- 3 --> H[Mark Completed]:::mark_completed_node;
+              H --> I[(Update Status)]:::update_status;
+              C -- 4 --> J[Delete Task]:::delete_task_node;
+              J --> K[(Remove Task)]:::remove_task;
+              C -- 5 --> L[Exit]:::exit_node;
+              L --> M[End]:::end;
+              
+              classDef start fill:#f9f,stroke:#333,stroke-width:2px;
+              classDef end fill:#f9f,stroke:#333,stroke-width:2px;
+      - pseudocode:
+          description: >
+            Builds on the flowchart with logical instructions. Lines/blocks should support unique IDs for mapping. Uses supported formats.
+          example: | # Added line/block IDs (hypothetical format)
+            # L1
+            - Display options to the user: # block_id: display_options
+                # L2
+                - Add a task.
+                # L3
+                - View tasks.
+                # L4
+                - Mark a task as completed.
+                # L5
+                - Delete a task.
+                # L6
+                - Exit.
+            # L7
+            - Perform action based on user choice: # block_id: perform_action
+                # L8
+                - If "Add Task": # block_id: if_add
+                    # L9
+                    - Prompt user for task.
+                    # L10
+                    - Append to list.
+                # L11
+                - If "View Tasks": # block_id: if_view
+                    # L12
+                    - Loop through list and display tasks with statuses.
+                # L13
+                - If "Mark Completed": # block_id: if_mark
+                    # L14
+                    - Ask for task index.
+                    # L15
+                    - Mark task as "Completed".
+                # L16
+                - If "Delete Task": # block_id: if_delete
+                    # L17
+                    - Ask for task index.
+                    # L18
+                    - Remove task.
+      - code:
+          description: >
+            Implements the logic using a specific, supported programming language. Code blocks/lines should support unique IDs for mapping.
+          # --- CHANGED: Now a list to support multiple languages ---
+          examples: 
+            - language: "python" 
+              example: | # Added block IDs via comments (example)
+                def todo_list_app(): # block_id: func_def
+                    tasks = [] # block_id: init_list
+                    
+                    while True: # block_id: main_loop
+                        # block_id: print_menu
+                        print("\nMenu:")
+                        print("1. Add Task")
+                        # ... (rest of menu print statements) ...
+                        print("5. Exit")
+                        
+                        choice = input("Choose an option (1-5): ") # block_id: get_choice
+                        
+                        if choice == "1": # block_id: code_add
+                            task = input("Enter task description: ")
+                            tasks.append({"description": task, "completed": False})
+                            print("Task added!")
+                        
+                        elif choice == "2": # block_id: code_view
+                            print("\nTasks:")
+                            for index, task in enumerate(tasks, start=1): # block_id: view_loop
+                                status = "Completed" if task["completed"] else "Not Completed"
+                                print(f"{index}. {task['description']} - {status}")
+                        
+                        # ... (rest of elif blocks for mark, delete with block_ids) ...
+                        
+                        elif choice == "5": # block_id: code_exit
+                            print("Goodbye!")
+                            break
+                        
+                        else: # block_id: code_invalid
+                            print("Invalid option, please try again.")
+            - language: "javascript" # Example for another language
+              example: |
+                function todoListApp() { // block_id: func_def_js
+                  let tasks = []; // block_id: init_list_js
+                  
+                  while (true) { // block_id: main_loop_js
+                    console.log("\nMenu:");
+                    // ... (menu options) ...
+                    
+                    let choice = prompt("Choose an option (1-5):"); // block_id: get_choice_js
+
+                    if (choice === "1") { // block_id: code_add_js
+                       // ... JS implementation ...
+                    } else if (choice === "2") { // block_id: code_view_js
+                       // ... JS implementation ...
+                    } 
+                    // ... (rest of JS implementation) ...
+                    else if (choice === "5") { // block_id: code_exit_js
+                      console.log("Goodbye!");
+                      break;
+                    } else { // block_id: code_invalid_js
+                      console.log("Invalid option, please try again.");
+                    }
+                  }
+                }
+
+
+  tasks:
+    description: >
+      Exercises for learners. Each task should include all layers and potentially layer mappings.
+    beginner_tasks:
+      - id: "B1" # More descriptive ID
+        name: "Hello World with Layers"
+        objective: >
+          Understand the flow from visual representation to pseudocode to executable code for a simple output task.
+        target_language: "python" # Can specify language per task
+        layers:
+          - flowchart: |
+              graph TD
+                A[Start]:::start --> B[Print 'Hello World']:::print_hw --> C[End]:::end;
+          - pseudocode: |
+              # L1
+              - Start.
+              # L2 
+              - Display "Hello, World!" to the user. # block_id: display_hw
+              # L3
+              - End.
+          - code: # Using list format even for one example for consistency
+              examples:
+                - language: "python"
+                  example: |
+                    # block_id: code_print_hw
+                    print("Hello, World!")
+        # --- NEW: Layer Mapping Example ---
+        layer_mapping:
+          description: > 
+            Defines explicit links between elements in different layers for interactive highlighting or navigation.
+          links:
+            - flowchart_id: print_hw
+              pseudocode_id: display_hw # Could be block_id or line number L2
+              code_id: code_print_hw # Can be block_id or line range
+
+    advanced_tasks:
+      - id: "A1" # More descriptive ID
+        name: "To-Do List Application"
+        objective: >
+          Build a functional To-Do List application, mapping logic across flowchart, pseudocode, and code.
+        target_language: "python" # Can be overridden by user preference if system supports it
+        layers:
+          # (Flowchart, Pseudocode, Code examples as defined above with IDs)
+          - flowchart: |
+              # ... (Flowchart example with IDs as shown in visualization_layers) ...
+          - pseudocode: |
+              # ... (Pseudocode example with IDs as shown in visualization_layers) ...
+          - code:
+              examples:
+                - language: "python"
+                  example: |
+                    # ... (Python code example with IDs as shown in visualization_layers) ...
+                # Potentially add JS example here too if desired for this specific task
+        # --- NEW: More Complex Layer Mapping ---
+        layer_mapping:
+          description: "Links for the To-Do list application."
+          links:
+            - flowchart_id: add_task_node 
+              pseudocode_id: if_add 
+              code_id: code_add
+            - flowchart_id: append_list
+              pseudocode_id: L10 # Specific line
+              code_id: code_add # Part of the add block
+            - flowchart_id: view_tasks_node
+              pseudocode_id: if_view
+              code_id: code_view
+            - flowchart_id: loop_display
+              pseudocode_id: L12
+              code_id: view_loop
+            # ... (Add mappings for Mark Completed, Delete, Exit etc.) ...
+            - flowchart_id: exit_node
+              pseudocode_id: L6 # Assumes pseudocode line for Exit option
+              code_id: code_exit
+
+  chatbot_training:
+    description: >
+      Guidelines for training chatbots/AI assistants interacting with this framework's content and structure.
+    steps:
+      - Use flowchart (referencing node IDs) to explain logical flows.
+      - Translate pseudocode (referencing line/block IDs) into simple explanations.
+      - Provide code examples in *supported languages*, referencing mappings.
+      - Offer interactive debugging help, potentially highlighting linked elements across layers based on errors.
+      - Explain code optimization referencing specific code blocks (using IDs).
+      - Understand and utilize the `layer_mapping` for contextual help.
+
+  additional_features:
+    description: >
+      Potential enhancements for the implementing system.
+    features:
+      - "Interactive Linking": Clicking an element in one layer highlights corresponding elements in others based on `layer_mapping`.
+      - "Dynamic Visualization Tools": Allow users to build/modify flowcharts and possibly generate pseudocode skeletons.
+      - "Integrated Code Editor/Runner": Embed an editor and sandboxed execution environment supporting languages defined in `technical_environment`.
+      - "Challenge Generator": Create tasks programmatically based on concepts and difficulty.
+      - "AI-Assisted Feedback Engine": (See dedicated config below) Implement feedback mechanisms.
+      - "Progress Tracking": Monitor learner completion of tasks and understanding of concepts across layers.
+      - "User Profiles": Allow users to set preferred language, track progress.
+  
+  # --- NEW: Detailed AI Feedback Configuration ---
+  ai_feedback_config:
+    description: >
+      Specifies how the AI feedback engine should operate within the framework.
+    enabled: true # Global toggle for AI feedback
+    feedback_granularity: # How detailed should the feedback be?
+      - "line"
+      - "block" # Default, refers to logical blocks identified by IDs
+      - "layer" # Overall feedback for the flowchart, pseudocode, or code
+      - "task" # Holistic feedback on the entire task solution
+    feedback_triggers: # When should feedback be provided?
+      - "on_demand" # User explicitly requests feedback
+      - "on_error" # Automatically triggered on syntax or runtime error
+      - "on_submit" # When user submits a completed layer or task
+      - "passive_highlighting" # Subtle hints/warnings as user types (requires advanced integration)
+    feedback_types: # What kind of feedback can be provided?
+      - type: "syntax_check"
+        description: "Checks for language-specific syntax errors in the code layer."
+        applicable_layers: ["code"]
+        default_trigger: "on_error"
+      - type: "logic_consistency"
+        description: "Compares logic between layers (e.g., does code match pseudocode/flowchart intent based on mappings?)."
+        applicable_layers: ["pseudocode", "code"]
+        default_trigger: "on_submit"
+      - type: "flowchart_validation"
+        description: "Checks if the flowchart follows standard conventions and seems logical for the task."
+        applicable_layers: ["flowchart"]
+        default_trigger: "on_submit"
+      - type: "pseudocode_clarity"
+        description: "Assesses if pseudocode is clear, unambiguous, and detailed enough."
+        applicable_layers: ["pseudocode"]
+        default_trigger: "on_submit"
+      - type: "code_style"
+        description: "Provides suggestions based on configured linters/formatters (e.g., PEP 8 for Python)."
+        applicable_layers: ["code"]
+        default_trigger: "on_demand"
+      - type: "code_efficiency"
+        description: "Suggests potential optimizations or more idiomatic ways to write code (use with caution for beginners)."
+        applicable_layers: ["code"]
+        default_trigger: "on_demand"
+      - type: "conceptual_guidance"
+        description: "Provides hints or explains concepts related to the task if the learner seems stuck."
+        applicable_layers: ["flowchart", "pseudocode", "code"]
+        default_trigger: "on_demand"
+    personalization:
+      difficulty_adaptation: true # Should AI adjust hint level based on user progress?
+      error_pattern_detection: true # Should AI try to identify recurring mistakes?
