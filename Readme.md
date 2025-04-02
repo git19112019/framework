@@ -1,4 +1,4 @@
-# Interactive Programming Learning Framework
+ # Interactive Programming Learning Framework
 
 ## Overview
 The **Interactive Programming Learning Framework** is a structured YAML-based system designed to teach programming effectively. It integrates three key components—**Flowcharts**, **Pseudocode**, and **Code**—layered together to create an intuitive and engaging learning experience. This framework caters to both learners and intelligent chatbots, guiding them through a logical and systematic approach to understanding programming.
@@ -31,7 +31,7 @@ The YAML file is organized as follows:
 Here is an example learning process using the To-Do List Application:
 
 ### **1. Flowchart**
-```plaintext
+```mermaid
 graph TD
     A[Start] --> B[Display Menu]
     B --> C[User Chooses Option]
