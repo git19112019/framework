@@ -1,0 +1,163 @@
+programming_framework:
+  title: "Interactive Programming Learning Framework with Layered Visualization"
+  version: "1.1"
+  author: "You & Copilot"
+  description: >
+    A YAML-based framework designed to teach programming with interactive layers.
+    It combines flowcharts, pseudocode, and programming code in a sequential format.
+    This approach allows learners to visualize, understand, and implement programming concepts.
+
+  visualization_layers:
+    description: >
+      An interactive system where programming concepts are layered step-by-step:
+      flowchart first, pseudocode second, and programming code third.
+    layers:
+      - flowchart:
+          description: >
+            Provides a visual representation of the logical flow of the application.
+          example: |
+            graph TD
+              A[Start] --> B[Show Menu]
+              B --> C[Choose Option]
+              C --> D[Add Task]
+              C --> E[View Tasks]
+              C --> F[Mark Completed]
+              C --> G[Delete Task]
+              C --> H[Exit]
+      - pseudocode:
+          description: >
+            Builds on the flowchart by adding logical instructions for each step.
+          example: |
+            - Display options to the user:
+                - Add a task.
+                - View tasks.
+                - Mark a task as completed.
+                - Delete a task.
+                - Exit.
+            - Perform action based on user choice:
+                - If "Add Task":
+                    - Prompt user for task.
+                    - Append to list.
+                - If "View Tasks":
+                    - Loop through list and display tasks with statuses.
+                - If "Mark Completed":
+                    - Ask for task index.
+                    - Mark task as "Completed".
+                - If "Delete Task":
+                    - Ask for task index.
+                    - Remove task.
+      - code:
+          description: >
+            Implements the logic and steps defined in pseudocode using a specific programming language.
+          example: |
+            def todo_list_app():
+                tasks = []  # Initialize an empty list
+                
+                while True:
+                    print("\nMenu:")
+                    print("1. Add Task")
+                    print("2. View Tasks")
+                    print("3. Mark Task as Completed")
+                    print("4. Delete Task")
+                    print("5. Exit")
+                    
+                    choice = input("Choose an option (1-5): ")
+                    
+                    if choice == "1":
+                        task = input("Enter task description: ")
+                        tasks.append({"description": task, "completed": False})
+                        print("Task added!")
+                    
+                    elif choice == "2":
+                        print("\nTasks:")
+                        for index, task in enumerate(tasks, start=1):
+                            status = "Completed" if task["completed"] else "Not Completed"
+                            print(f"{index}. {task['description']} - {status}")
+                    
+                    elif choice == "3":
+                        index = int(input("Enter task number to mark as completed: ")) - 1
+                        if 0 <= index < len(tasks):
+                            tasks[index]["completed"] = True
+                            print("Task marked as completed!")
+                        else:
+                            print("Invalid task number.")
+                    
+                    elif choice == "4":
+                        index = int(input("Enter task number to delete: ")) - 1
+                        if 0 <= index < len(tasks):
+                            tasks.pop(index)
+                            print("Task deleted!")
+                        else:
+                            print("Invalid task number.")
+                    
+                    elif choice == "5":
+                        print("Goodbye!")
+                        break
+                    
+                    else:
+                        print("Invalid option, please try again.")
+
+  tasks:
+    description: >
+      Exercises for learners to practice programming concepts using layered learning.
+    beginner_tasks:
+      - id: "1"
+        name: "Hello World with Layers"
+        objective: >
+          Understand the flow from pseudocode to code by creating a simple "Hello World" application.
+        layers:
+          - flowchart: |
+              graph TD
+                A[Start] --> B[Print 'Hello World'] --> C[End]
+          - pseudocode: |
+              - Start.
+              - Display "Hello, World!" to the user.
+              - End.
+          - code: |
+              print("Hello, World!")
+    advanced_tasks:
+      - id: "1"
+        name: "To-Do List Application"
+        objective: >
+          Build a functional To-Do List application using the layered approach.
+        layers:
+          - flowchart: |
+              graph TD
+                A[Start] --> B[Display Menu]
+                B --> C[User Chooses Option]
+                C --> D[Add Task] --> E[Append to List]
+                C --> F[View Tasks] --> G[Loop and Display]
+                C --> H[Mark Completed] --> I[Update Status]
+                C --> J[Delete Task] --> K[Remove Task]
+                C --> L[Exit] --> M[End]
+          - pseudocode: |
+              - Initialize an empty list to store tasks.
+              - Show menu with options:
+                  - Add Task.
+                  - View Tasks.
+                  - Mark Completed.
+                  - Delete Task.
+                  - Exit.
+              - Perform actions based on user choice.
+          - code: |
+              def todo_list_app():
+                  tasks = []
+                  # Full implementation as demonstrated earlier...
+
+  chatbot_training:
+    description: >
+      Guidelines for training chatbots to deliver programming lessons using this framework.
+    steps:
+      - Use flowcharts to explain logical flows to users.
+      - Translate pseudocode into simple explanations.
+      - Provide code examples in multiple languages based on user preference.
+      - Offer interactive learning through debugging and code optimization.
+
+  additional_features:
+    description: >
+      Enhancements for learner and chatbot engagement with the framework.
+    features:
+      - Add annotations directly to flowcharts for pseudocode explanations.
+      - Integrate visual tools to display layered concepts dynamically.
+      - Provide challenges that combine flowchart creation, pseudocode writing, and coding.
+      - Offer AI-assisted feedback to evaluate learner progress and suggest improvements.
