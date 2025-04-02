@@ -1,7 +1,7 @@
 programming_framework:
   title: "Interactive Programming Learning Framework with Layered Visualization"
   version: "1.1"
-  author: "You & Copilot"
+  author: "You"
   description: >
     A YAML-based framework designed to teach programming with interactive layers.
     It combines flowcharts, pseudocode, and programming code in a sequential format.
