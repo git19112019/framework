@@ -1,0 +1,12 @@
+input:
+  format: yaml
+  data: true
+process:
+  method: data
+  steps:
+    - parse: yaml
+    - validate: schema
+    - transform: output
+output:
+  format: data
+  result: true
