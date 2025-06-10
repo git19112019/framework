@@ -1,3 +1,94 @@
+version: "1.0"
+
+# ────────────────────────────────────────────────────────────────────────────
+# INPUT: định nghĩa dữ liệu, trigger, params, secrets…
+# ────────────────────────────────────────────────────────────────────────────
+input:
+  format: yaml
+  dataPath: s3://my-bucket/raw/users.csv
+
+  # 1) Trigger: cron hoặc webhook/light‐event
+  trigger:
+    type: cron
+    schedule: "0 * * * *"    # chạy mỗi giờ
+    # type: webhook
+    # event: git.push
+
+  # 2) Parameters & Secrets
+  params:
+    env: prod
+    retries: 3
+  secrets:
+    - aws_key
+    - aws_secret
+
+# ────────────────────────────────────────────────────────────────────────────
+# PROCESS: viết hết mọi logic (loop, if, plugin, parallel…)
+# ────────────────────────────────────────────────────────────────────────────
+process:
+  # 1) Bắt đầu với parse, clean, validate
+  steps:
+    - parse: csv
+    - clean_null: {}            # có thể coi đây là 1 plugin built-in
+
+    # 2) Loop / parallel: chạy song song qua 10 chunk
+    - parallel:
+        forks: 10
+        for_each: chunk in "${data.chunks}"
+        steps:
+          - uses: my-org/transform@v2
+            with:
+              input: "{{ chunk.uri }}"
+              output: "/tmp/out-{{ chunk.id }}.parquet"
+
+    # 3) Conditional & retry
+    - if:
+        condition: "${.params.env == 'prod'}"
+        then:
+          - run: echo "Running in production"
+        else:
+          - run: echo "Running in dev/testing"
+
+    - retry: "{{ .params.retries }}"
+      step:
+        - uses: my-org/schema-validator@latest
+          with:
+            file: "*.parquet"
+            schema: s3://schemas/user-schema.json
+
+    # 4) Custom script / container plugin
+    - run: |
+        echo "Merging all parquet files…"
+        parquet-merge /tmp/*.parquet -o /tmp/final.parquet
+
+    # 5) Notification on success
+    - on_success:
+        - uses: my-org/slack-notify@1.0
+          with:
+            channel: "#data-pipelines"
+            message: "Pipeline {{ metadata.name }} finished ✅"
+
+  # 6) Global error‐handling
+  on_error:
+    strategy: rollback      # hoặc retry/skip/fail
+    max_retries: 2
+
+# ────────────────────────────────────────────────────────────────────────────
+# OUTPUT: nơi lưu kết quả, định dạng, notifications…
+# ────────────────────────────────────────────────────────────────────────────
+output:
+  format: parquet
+  destination: s3://my-bucket/processed/users-{{ date "YYYYMMDD_HH" }}.parquet
+
+  # Thông báo chung khi xong – email/slack…
+  notifications:
+    - type: email
+      to: team-data@myorg.io
+      subject: "Data pipeline {{ metadata.name }} completed"
+      body: |
+        *Status:* {{ status }}
+        *Output:* {{ output.destination }}
+-
 input:
   format: yaml
   data: true
@@ -10,3 +101,5 @@ process:
 output:
   format: data
   result: true
+-
+
