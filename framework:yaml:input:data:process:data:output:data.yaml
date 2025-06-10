@@ -1,3 +1,90 @@
+-
+# File: dsl-engine-config.yaml
+engine:
+  name: dsl-pipeline-engine
+  version: "1.0.0"
+  description: >
+    A generic, extensible DSL runner that
+    - parses input–process–output pipelines,
+    - schedules & triggers runs,
+    - executes shell & plugin steps,
+    - handles errors & notifications,
+    - integrates with Kubernetes and observability stacks.
+
+  capabilities:
+    parser:
+      # Hỗ trợ cú pháp cơ bản + loop/condition/macros/template
+      syntax:
+        - input-process-output
+        - conditional: if-else
+        - loops: for_each, parallel
+        - macros: functions
+        - templating: Jinja2
+
+    executor:
+      modes:
+        - shell    # run: "..."
+        - plugin   # uses: org/plugin@v1
+      plugin_system:
+        manifest_key: plugin.yaml
+        pull_policy: IfNotPresent
+        cache_local: true
+        versioning: true
+
+    scheduler:
+      triggers:
+        - cron        # theo schedule
+        - webhook     # event HTTP
+        - file_watch  # thay đổi file / bucket
+        - queue_event # Kafka / RabbitMQ
+
+    error_handling:
+      default_strategy: retry
+      strategies:
+        - retry         # chạy lại N lần
+        - skip_on_error # bỏ qua bước lỗi
+        - fail_pipeline # dừng pipeline
+        - rollback      # hồi phục trạng thái cũ
+      max_retries: 3
+
+    notifier:
+      channels:
+        - email
+        - slack
+        - webhook
+
+    observability:
+      logging: real_time   # in stdout/stderr
+      metrics: prometheus  # expose /metrics
+      tracing: jaeger      # distributed-tracing
+
+    k8s_integration:
+      crd_support: true     # làm base cho operator
+      cronjob_support: true # deploy CronJob khi trigger.type=cron
+      job_support: true     # deploy Job cho mỗi run
+
+  interfaces:
+    cli:
+      description: Command-line interface for local / CI usage
+      commands:
+        - init          # khởi tạo project
+        - validate      # kiểm tra cú pháp & schema
+        - run           # chạy pipeline
+        - lint          # static analysis
+        - list-plugins  # liệt kê plugin đã cài
+
+    api:
+      rest:
+        enabled: true
+        port: 8080
+        endpoints:
+          - /pipelines
+          - /runs
+          - /plugins
+      grpc:
+        enabled: false
+        port: 50051
+-
 version: "1.0"
 
 # ────────────────────────────────────────────────────────────────────────────
