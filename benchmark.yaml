@@ -1,0 +1,198 @@
+# LLM/Chatbot Capability Benchmark
+# Version: 1.0
+# Description: Một bộ sưu tập các bài kiểm tra (prompts) được thiết kế để đánh giá
+#              toàn diện năng lực của các Mô hình Ngôn ngữ Lớn và Chatbot.
+
+benchmarkSuite:
+  name: "Comprehensive LLM Capability Assessment Suite"
+  version: "1.0"
+  description: "Đánh giá khả năng hiểu, suy luận, sáng tạo, và tuân thủ của LLM."
+  tests:
+    #---------------------------------------------------------------------------
+    # Test 1: Hiểu và Tuân thủ Hướng dẫn Phức tạp (Complex Instruction Following)
+    #---------------------------------------------------------------------------
+    - testId: "CIF_001"
+      title: "Xây dựng Kế hoạch Dự án Chi tiết"
+      description: "Đánh giá khả năng hiểu các yêu cầu đa tầng và tạo ra một văn bản có cấu trúc phức tạp theo hướng dẫn."
+      prompt: |
+        Hãy tưởng tượng bạn là một quản lý dự án. Bạn được giao nhiệm vụ lên kế hoạch cho việc ra mắt một ứng dụng di động mới về quản lý thời gian cá nhân.
+        Yêu cầu:
+        1.  Tạo một kế hoạch dự án chi tiết dưới dạng danh sách các mục chính và các mục con.
+        2.  Kế hoạch phải bao gồm ít nhất 5 giai đoạn chính (ví dụ: Nghiên cứu & Phân tích, Thiết kế, Phát triển, Kiểm thử, Ra mắt & Marketing).
+        3.  Mỗi giai đoạn chính phải có ít nhất 3 nhiệm vụ cụ thể.
+        4.  Đối với mỗi nhiệm vụ, hãy ước tính thời gian hoàn thành (ví dụ: 3 ngày, 1 tuần) và người chịu trách nhiệm chính (ví dụ: Đội Thiết kế, Trưởng nhóm Marketing).
+        5.  Thêm một phần "Rủi ro Tiềm ẩn và Giải pháp Giảm thiểu" với ít nhất 3 rủi ro.
+        6.  Sử dụng giọng văn chuyên nghiệp, rõ ràng.
+        7.  Định dạng đầu ra phải là Markdown, sử dụng tiêu đề (headings) cho các giai đoạn chính.
+      evaluationCriteria:
+        - "Tuân thủ tất cả 7 yêu cầu trong prompt."
+        - "Tính logic và thực tế của kế hoạch dự án."
+        - "Mức độ chi tiết của các nhiệm vụ."
+        - "Sự rõ ràng và chuyên nghiệp của ngôn ngữ."
+        - "Đúng định dạng Markdown."
+      expectedSkillsDemonstrated: ["Instruction Following", "Structured Output Generation", "Logical Reasoning", "Domain Knowledge (Project Management - basic)"]
+
+    #---------------------------------------------------------------------------
+    # Test 2: Sáng tạo và Sinh văn bản theo Phong cách (Creative & Stylistic Writing)
+    #---------------------------------------------------------------------------
+    - testId: "CSW_001"
+      title: "Viết Truyện ngắn theo Phong cách Edgar Allan Poe"
+      description: "Đánh giá khả năng sáng tạo nội dung gốc và bắt chước một phong cách văn học cụ thể."
+      prompt: |
+        Hãy viết một truyện ngắn (khoảng 300-500 từ) theo phong cách của Edgar Allan Poe.
+        Chủ đề: Một nhà khoa học cô độc phát hiện ra một bí mật kinh hoàng trong phòng thí nghiệm của mình vào một đêm mưa bão.
+        Yêu cầu:
+        1.  Sử dụng ngôn từ u ám, giàu hình ảnh gợi cảm giác rùng rợn.
+        2.  Tập trung vào tâm lý nhân vật, sự căng thẳng và nỗi sợ hãi leo thang.
+        3.  Kết thúc truyện một cách bất ngờ hoặc để lại ấn tượng ám ảnh.
+      evaluationCriteria:
+        - "Mức độ thành công trong việc bắt chước phong cách Poe (từ vựng, cấu trúc câu, không khí)."
+        - "Tính độc đáo và hấp dẫn của cốt truyện."
+        - "Khả năng xây dựng không khí và tâm lý nhân vật."
+        - "Ngôn ngữ và ngữ pháp chính xác."
+      expectedSkillsDemonstrated: ["Creative Writing", "Stylistic Adherence", "Narrative Development", "Emotional Tone Generation"]
+
+    #---------------------------------------------------------------------------
+    # Test 3: Suy luận Logic và Giải quyết Vấn đề (Logical Reasoning & Problem Solving)
+    #---------------------------------------------------------------------------
+    - testId: "LRP_001"
+      title: "Bài toán Logic về Sắp xếp"
+      description: "Đánh giá khả năng suy luận logic để giải quyết một vấn đề có các ràng buộc."
+      prompt: |
+        Có 5 người bạn: An, Bình, Cường, Dũng, và Hương. Họ vừa hoàn thành một cuộc thi chạy.
+        Biết rằng:
+        1.  Bình về trước Cường nhưng sau Hương.
+        2.  An không về nhất và cũng không về cuối.
+        3.  Dũng về ngay sau An.
+        4.  Cường không về cuối.
+        Hỏi:
+        a) Thứ tự về đích của 5 người bạn là gì?
+        b) Ai về nhất? Ai về cuối?
+        Hãy trình bày rõ ràng các bước suy luận của bạn.
+      evaluationCriteria:
+        - "Đáp án chính xác cho cả câu a và b."
+        - "Các bước suy luận logic, dễ hiểu và không mâu thuẫn."
+        - "Khả năng xử lý các ràng buộc đồng thời."
+      expectedSkillsDemonstrated: ["Logical Reasoning", "Deductive Inference", "Constraint Satisfaction", "Problem Solving"]
+
+    #---------------------------------------------------------------------------
+    # Test 4: Kiến thức Tổng quát và Khả năng Giải thích (General Knowledge & Explanation)
+    #---------------------------------------------------------------------------
+    - testId: "GKE_001"
+      title: "Giải thích Hiện tượng Hiệu ứng Nhà kính"
+      description: "Đánh giá kiến thức về một chủ đề khoa học phổ thông và khả năng giải thích nó một cách rõ ràng, dễ hiểu cho người không chuyên."
+      prompt: |
+        Hãy giải thích hiện tượng hiệu ứng nhà kính là gì.
+        Yêu cầu:
+        1.  Mô tả cơ chế hoạt động của hiệu ứng nhà kính tự nhiên.
+        2.  Giải thích tại sao hiệu ứng nhà kính lại quan trọng đối với sự sống trên Trái Đất.
+        3.  Nêu rõ vai trò của các hoạt động con người trong việc làm tăng cường hiệu ứng nhà kính và dẫn đến biến đổi khí hậu.
+        4.  Sử dụng ngôn ngữ đơn giản, dễ hiểu, tránh thuật ngữ chuyên ngành quá phức tạp nếu không giải thích.
+        5.  Độ dài khoảng 200-300 từ.
+      evaluationCriteria:
+        - "Tính chính xác của thông tin khoa học."
+        - "Sự rõ ràng, mạch lạc và dễ hiểu của lời giải thích."
+        - "Mức độ bao quát các khía cạnh yêu cầu."
+        - "Sử dụng ngôn ngữ phù hợp với đối tượng không chuyên."
+      expectedSkillsDemonstrated: ["Knowledge Retrieval", "Explanation Generation", "Simplification of Complex Concepts", "Information Synthesis"]
+
+    #---------------------------------------------------------------------------
+    # Test 5: Xử lý Ngôn ngữ Tự nhiên - Phân tích Cảm xúc và Tóm tắt (NLP - Sentiment & Summarization)
+    #---------------------------------------------------------------------------
+    - testId: "NLP_001"
+      title: "Phân tích Cảm xúc và Tóm tắt Đánh giá Sản phẩm"
+      description: "Đánh giá khả năng hiểu sắc thái ngôn ngữ để xác định cảm xúc và trích xuất thông tin chính."
+      prompt: |
+        Cho đoạn văn bản đánh giá sản phẩm sau:
+        "Tôi vừa mua chiếc tai nghe XYZ này tuần trước. Chất âm của nó thực sự tuyệt vời, bass sâu và treble rất trong. Thiết kế cũng khá đẹp mắt và đeo thoải mái. Tuy nhiên, thời lượng pin lại không được như quảng cáo, chỉ dùng được khoảng 3 tiếng liên tục là phải sạc lại, khá bất tiện. Dịch vụ khách hàng khi tôi hỏi về vấn đề pin cũng phản hồi hơi chậm. Nói chung, nếu không quá quan trọng về pin thì đây là một lựa chọn tốt trong tầm giá."
+
+        Yêu cầu:
+        1.  Xác định cảm xúc tổng thể của người viết về sản phẩm (Tích cực, Tiêu cực, Trung tính, hoặc Hỗn hợp). Giải thích ngắn gọn.
+        2.  Liệt kê 2 điểm tích cực chính và 2 điểm tiêu cực chính mà người viết đề cập.
+        3.  Viết một bản tóm tắt ngắn gọn (1-2 câu) nội dung chính của đánh giá này.
+      evaluationCriteria:
+        - "Xác định chính xác cảm xúc tổng thể và có giải thích hợp lý."
+        - "Trích xuất đúng các điểm tích cực và tiêu cực chính."
+        - "Bản tóm tắt ngắn gọn, súc tích và bao hàm ý chính."
+      expectedSkillsDemonstrated: ["Sentiment Analysis", "Key Information Extraction", "Summarization", "Natural Language Understanding"]
+
+    #---------------------------------------------------------------------------
+    # Test 6: Khả năng Tương tác và Duy trì Ngữ cảnh Hội thoại (Conversational Context & Interaction)
+    #---------------------------------------------------------------------------
+    - testId: "CCI_001"
+      title: "Lên kế hoạch Chuyến đi Cuối tuần"
+      description: "Đánh giá khả năng duy trì ngữ cảnh qua nhiều lượt hội thoại, đặt câu hỏi làm rõ và đưa ra gợi ý phù hợp."
+      # Prompt này sẽ được thực hiện qua nhiều lượt tương tác. Dưới đây là lượt đầu tiên.
+      prompt_turn_1: |
+        Chatbot: Chào bạn! Tôi có thể giúp gì cho bạn hôm nay?
+        User: Tôi muốn lên kế hoạch cho một chuyến đi cuối tuần.
+      # Người đánh giá sẽ tiếp tục hội thoại với chatbot, ví dụ:
+      # User (turn 2): Tôi thích đi biển.
+      # User (turn 3): Ngân sách của tôi khoảng 2 triệu cho 2 người.
+      # User (turn 4): Tôi ở Hà Nội. Bạn có gợi ý nào không?
+      # ...
+      evaluationCriteria:
+        - "Khả năng ghi nhớ thông tin từ các lượt nói trước (ngữ cảnh)."
+        - "Đặt câu hỏi làm rõ thông minh khi thông tin còn thiếu."
+        - "Đưa ra các gợi ý phù hợp dựa trên thông tin đã thu thập."
+        - "Duy trì sự tự nhiên và mạch lạc của cuộc hội thoại."
+        - "Khả năng xử lý các thay đổi hoặc yêu cầu mới từ người dùng."
+      expectedSkillsDemonstrated: ["Context Management", "Dialog Management", "Question Asking", "Personalized Recommendation", "Interactive Communication"]
+
+    #---------------------------------------------------------------------------
+    # Test 7: Khả năng học hỏi từ phản hồi (Learning from Feedback - nếu có thể kiểm tra)
+    #---------------------------------------------------------------------------
+    # Test này khó chuẩn hóa trong một prompt tĩnh, nhưng là một khía cạnh quan trọng.
+    - testId: "LFF_001"
+      title: "Cải thiện Câu trả lời dựa trên Phản hồi"
+      description: "Đánh giá khả năng mô hình điều chỉnh hoặc cải thiện câu trả lời sau khi nhận được phản hồi cụ thể."
+      prompt_initial: |
+        Hãy giải thích khái niệm 'Blockchain' cho một người không có kiến thức về công nghệ.
+      # Sau khi chatbot trả lời, người đánh giá sẽ đưa ra phản hồi, ví dụ:
+      # Feedback: "Câu trả lời của bạn hơi quá kỹ thuật ở phần 'cryptographic hash'. Bạn có thể giải thích nó đơn giản hơn không?"
+      # Prompt_follow_up: "Dựa trên phản hồi đó, hãy cung cấp một phiên bản cải thiện của câu trả lời trước."
+      evaluationCriteria:
+        - "Mô hình có hiểu và áp dụng phản hồi để cải thiện câu trả lời không?"
+        - "Mức độ cải thiện so với câu trả lời ban đầu."
+        - "Khả năng tránh lặp lại lỗi cũ."
+      expectedSkillsDemonstrated: ["Adaptability", "Feedback Integration", "Refinement of Output"]
+
+    #---------------------------------------------------------------------------
+    # Test 8: Prompt của bạn (The Original Comprehensive Framework Prompt)
+    #---------------------------------------------------------------------------
+    - testId: "YOUR_CFP_001"
+      title: "Xây dựng Framework Học tập Toàn diện (Đánh giá Nâng cao)"
+      description: "Sử dụng prompt gốc của bạn để đánh giá khả năng tổng hợp, cấu trúc thông tin phức tạp và đáp ứng các yêu cầu chi tiết."
+      prompt: |
+        # (Dán toàn bộ prompt gốc của bạn về framework học tập vào đây)
+        Hãy xây dựng một framework học tập toàn diện, có khả năng cá nhân hóa cao và ứng dụng vào nhiều lĩnh vực khác nhau. Định dạng đầu ra là YAML, bao gồm cấu trúc chi tiết, chỉ số đánh giá hiệu quả, hướng dẫn triển khai, và khả năng điều chỉnh theo từng hệ thống.
+        Cấu trúc framework:
+            Starting Point: Xác định trình độ hiện tại, động lực và phong cách học tập của người học.
+            Objectives: Định nghĩa mục tiêu ngắn hạn, trung hạn, dài hạn theo từng giai đoạn phát triển kỹ năng.
+            Methodology: Các phương pháp học tập tối ưu, hỗ trợ cá nhân hóa theo từng đối tượng.
+            Resources: Tài nguyên học tập phong phú, bao gồm sách, khóa học trực tuyến, công cụ thực hành.
+            Progress Tracking: Hệ thống đo lường hiệu quả, giúp người học theo dõi tiến độ và điều chỉnh kế hoạch.
+        Yêu cầu tối ưu hóa:
+            Khả năng cá nhân hóa cao: Tùy chỉnh tốc độ, phương pháp, và tài nguyên theo nhu cầu người học.
+            Tương thích đa nền tảng: Có thể tích hợp vào chatbot, nền tảng giáo dục trực tuyến, hệ thống AI hoặc LMS.
+            Hệ thống đo lường thông minh: Đánh giá theo tiêu chí kiến thức, ứng dụng thực tế, tương tác, và khả năng điều chỉnh chiến lược học tập.
+            Hướng dẫn YAML đầy đủ: Cung cấp ví dụ thực tế về cách triển khai framework, tích hợp vào các nền tảng khác nhau.
+        Ứng dụng thực tế:
+            Học cá nhân hóa: Người học có thể tự thiết kế lộ trình phù hợp với mục tiêu cá nhân.
+            Lập kế hoạch học tập theo lĩnh vực: Áp dụng cho từng chuyên ngành cụ thể.
+            Tích hợp vào hệ thống AI/chatbot: Framework hoạt động như đầu vào để hỗ trợ lộ trình học tập thông minh.
+      evaluationCriteria:
+        - "Mức độ tuân thủ tất cả các yêu cầu chi tiết của prompt gốc."
+        - "Chất lượng, tính logic và tính thực tiễn của framework được tạo ra."
+        - "Độ sâu và sự thấu đáo trong từng thành phần của framework."
+        - "Sự sáng tạo trong việc đề xuất các giải pháp và ví dụ."
+        - "Tính nhất quán và rõ ràng của định dạng YAML."
+      expectedSkillsDemonstrated: ["Advanced Instruction Following", "Complex Information Structuring", "Conceptual Understanding", "Solution Design", "YAML Formatting"]
+
+  # Thêm các bài kiểm tra khác nếu cần...
+  # Ví dụ:
+  # - Dịch thuật và thích ứng văn hóa
+  # - Viết code (nếu chatbot có khả năng này)
+  # - Phát hiện thông tin sai lệch
+  # - Tóm tắt văn bản dài
+  # - Tạo câu hỏi dựa trên một đoạn văn
