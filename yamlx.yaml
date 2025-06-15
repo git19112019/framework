@@ -1,0 +1,77 @@
+dockerized_script:
+  dockerfile:
+    base_image: "python:3.10-slim"
+    dependencies:
+      - "apt-get update && apt-get install -y build-essential"
+      - "pip install --no-cache-dir pyyaml"
+    setup:
+      - "mkdir -p /app/yamlx"
+      - "write_file: /app/yamlx/core.py"
+      - "write_file: /app/yamlx/cli.py"
+      - "write_file: /app/yamlx/__init__.py"
+      - "write_file: /app/setup.py"
+      - "write_file: /app/example.yaml"
+      - "pip install -e ."
+    entrypoint: "yamlx example.yaml"
+
+  mermaid:
+    diagram: |
+      graph TD
+          A[Base Image: python:3.10-slim] -->|Install system dependencies| B[apt-get update & install build-essential]
+          B -->|Install PyYAML| C[pip install pyyaml]
+          C -->|Create working directory| D[mkdir -p /app/yamlx]
+          D -->|Write core script| E[Create core.py]
+          E -->|Write CLI tool| F[Create cli.py]
+          F -->|Create __init__.py| G[Empty file for package init]
+          G -->|Setup Python package| H[Create setup.py]
+          H -->|Write example YAML| I[Create example.yaml]
+          I -->|Install CLI tool| J[pip install -e .]
+          J -->|Define entrypoint| K[ENTRYPOINT yamlx example.yaml]
+
+  pseudocode:
+    description: |
+      START
+          LOAD YAML script
+          IF YAML file exists THEN
+              PARSE YAML structure
+              FOR each task IN YAML tasks DO
+                  IF action == "print_message" THEN
+                      PRINT message
+                  ELSE IF action == "calculate" THEN
+                      EXECUTE mathematical operation
+                  ELSE IF action == "file_write" THEN
+                      WRITE content to file
+                  ELSE IF action == "run_command" THEN
+                      EXECUTE shell command
+                  ELSE IF action == "python_execute" THEN
+                      RUN embedded Python code
+                  ELSE IF action == "binary_execute" THEN
+                      DECODE & EXECUTE base64 binary data
+                  ELSE
+                      PRINT "Unsupported action"
+                  END IF
+              END FOR
+          ELSE
+              PRINT "File not found"
+          END IF
+      END
+
+  tasks:
+    - action: "print_message"
+      message: "🚀 Bắt đầu thực thi YAML..."
+    - action: "calculate"
+      operation: "add"
+      numbers: [10, 20, 30]
+    - action: "file_write"
+      filename: "output.txt"
+      content: "✅ Đã ghi file thành công!"
+    - action: "run_command"
+      command: "echo '📦 Shell command OK!'"
+    - action: "python_execute"
+      code: |
+        print("🐍 Chạy Python embedded:")
+        for i in range(3):
+            print(f"  Dòng {i+1}")
+    - action: "binary_execute"
+      binary_code: !!binary |
+        IyEvYmluL3NoCmVjaG8gIlx1MjU2RiBCaW5hcnkgY2jhuq9uIHThuqNpIgo=
