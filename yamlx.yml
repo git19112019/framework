@@ -1,0 +1,50 @@
+metadata:
+  title: "✨ YAMLX - Full Agentic Workflow Demo"
+  description: "Tích hợp YAMLScript + Docker + Markdown + LLM-ready"
+
+tasks:
+  - action: "print_message"
+    message: "🚀 Bắt đầu quy trình YAMLX..."
+
+  - action: "calculate"
+    operation: "add"
+    numbers: [100, 250, 150]
+
+  - action: "file_write"
+    filename: "output.txt"
+    content: "✅ Đã ghi file từ YAMLX!"
+
+  - action: "run_command"
+    command: "echo '📦 Shell command OK!'"
+
+  - action: "python_execute"
+    code: |
+      print("🐍 Python embedded:")
+      for i in range(2):
+          print(f"  👉 Dòng {i+1}")
+
+  - action: "binary_execute"
+    binary_code: !!binary |
+      IyEvYmluL3NoCmVjaG8gIkhlbGxvIGZyb20gYmluYXJ5IQo=
+
+  # ➕ YAMLScript: chạy file logic.ys
+  - action: "ys_run"
+    file: "logic.ys"
+
+  # ➕ YAMLScript: tính toán nhanh biểu thức
+  - action: "ys_eval"
+    expr: "add(10, multiply(2, 5))"
+
+  # 🐳 Docker: gọi container Ubuntu chạy lệnh
+  - action: "docker_run"
+    image: "ubuntu"
+    command: "echo '🧱 Đang chạy trong Docker!'"
+
+  # 📄 Markdown: đọc file, trích xuất YAML và chạy
+  - action: "markdown_parse"
+    file: "example.md"
+
+  # 🔮 (Tùy chọn) Gọi LLM để sinh task YAML (sẽ được xử lý sau)
+  - action: "llm_generate"
+    prompt: "Tạo các bước YAML để build Docker image Python và chạy script tính tổng"
+    model: "gpt-4"
