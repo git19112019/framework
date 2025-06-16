@@ -1,0 +1,22 @@
+# 🔧 Ví dụ YAML trong Markdown
+
+```yaml
+- action: print_message
+  message: "📄 Đây là YAML nằm trong Markdown!"
+- action: run_command
+  command: "echo '✅ Đã chạy từ block Markdown'"
+---
+
+## 🧠 Ghi chú về xử lý:
+
+Bạn cần cập nhật `core.py` của `yamlx` để:
+
+1. Thêm handler cho các action sau:
+   - `ys_run`, `ys_eval`
+   - `docker_run`
+   - `markdown_parse`
+   - `llm_generate` *(tùy chọn: nếu bạn chưa tích hợp LLM thì có thể bỏ qua)*
+
+2. Cài thêm thư viện nếu cần:
+```bash
+pip install yamlscript markdown beautifulsoup4
