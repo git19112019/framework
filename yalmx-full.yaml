@@ -1,0 +1,86 @@
+metadata:
+  title: "🧩 YAMLX – Extensible YAML Execution Engine"
+  description: "Tổng hợp tính năng và hướng dẫn sử dụng YAMLX"
+
+sections:
+  - heading: "🚀 Tính năng nổi bật"
+    bullets:
+      - "✅ Viết quy trình công việc (workflow) bằng YAML"
+      - "🧠 Kiến trúc plug-in mở rộng linh hoạt"
+      - "🔧 Hỗ trợ print, calc, shell, file, Python, binary, HTTP"
+      - "🌱 Tích hợp Jinja2 với biến môi trường (`{{ env.USER }}`)"
+      - "📦 Chạy độc lập qua Docker hoặc cài local"
+
+  - heading: "📦 Cách cài đặt"
+    subsections:
+      - title: "Cách 1: Dùng Docker"
+        code: |
+          git clone https://github.com/yourname/yamlx
+          cd yamlx
+          docker build -t yamlx-cli .
+          docker run --rm -w /app -e USER=$(whoami) yamlx-cli
+
+      - title: "Cách 2: Dùng local Python"
+        code: |
+          git clone https://github.com/yourname/yamlx
+          cd yamlx
+          pip install -e .
+          yamlx example.yaml
+
+  - heading: "🧪 Ví dụ YAML"
+    code: |
+      metadata:
+        title: "🌟 YAMLX All-in-One Demo"
+      tasks:
+        - action: print_message
+          message: "🚀 Xin chào YAMLX!"
+        - action: calculate
+          operation: multiply
+          numbers: [2, 3, 4]
+        - action: file_write
+          filename: hello.txt
+          content: "✅ File đã được ghi"
+        - action: run_command
+          command: "echo 'Hello from {{ env.USER }}'"
+        - action: python_execute
+          code: |
+            print("→ Python đang chạy:")
+            for i in range(2):
+                print("  Dòng", i)
+        - action: http_request
+          method: GET
+          url: https://httpbin.org/get
+
+  - heading: "✨ Tự viết action mới"
+    bullets:
+      - "Tạo file trong `yamlx/actions/` và dùng decorator `@register`"
+    code: |
+      from yamlx.registry import register
+
+      @register("say_hello")
+      def _(task):
+          print("👋 Hello:", task.get("name", "stranger"))
+    yaml_example: |
+      - action: say_hello
+        name: Linh
+
+  - heading: "💬 Lệnh CLI"
+    code: |
+      yamlx <your_script.yaml>
+
+  - heading: "📁 Cấu trúc project"
+    code: |
+      yamlx/
+      ├── yamlx/
+      │   ├── core.py
+      │   ├── cli.py
+      │   ├── registry.py
+      │   └── actions/
+      ├── example.yaml
+      ├── Dockerfile
+      ├── setup.py
+      └── README.md
+
+  - heading: "📜 Giấy phép"
+    text: "MIT License – bạn thoải mái sử dụng và tùy chỉnh."
+
